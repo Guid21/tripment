@@ -1,0 +1,9 @@
+.Root {
+  max-width: 908px;
+  margin: 40px auto;
+  border-top: 1px solid #eaeeee;
+
+  > div:not(:first-child) {
+    margin-top: 28px;
+  }
+}

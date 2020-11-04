@@ -1,0 +1,13 @@
+@import '../../../../../../tripment.scss';
+
+.Availability {
+}
+
+.Item {
+  display: flex;
+  align-items: center;
+
+  .Icon {
+    margin-right: 8px;
+  }
+}

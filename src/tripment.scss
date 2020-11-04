@@ -1,0 +1,450 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+/* Function */
+@function str-replace($string, $search, $replace: '') {
+  $index: str-index($string, $search);
+
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace +
+      str-replace(
+        str-slice($string, $index + str-length($search)),
+        $search,
+        $replace
+      );
+  }
+
+  @return $string;
+}
+
+@function svg-fill($svg, $color) {
+  $replace-color: str-replace($svg, "fill='%23fff'", "fill='%23#{$color}'");
+  @return str-replace($replace-color, '#', '');
+}
+
+@function svg-size($svg, $width, $height) {
+  $svg: str-replace($svg, '<svg', '<svg width="#{$width}"');
+  $svg: str-replace($svg, '<svg', '<svg height="#{$height}"');
+
+  @return $svg;
+}
+
+/* SVG */
+$tick-icon: "data:image/svg+xml,%3Csvg width='12' height='9' viewBox='0 0 12 9' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M11.7071 0.292893C12.0976 0.683417 12.0976 1.31658 11.7071 1.70711L4.70711 8.70711C4.31658 9.09763 3.68342 9.09763 3.29289 8.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L4 6.58579L10.2929 0.292893C10.6834 -0.0976311 11.3166 -0.0976311 11.7071 0.292893Z' fill='%23fff'/%3E%3C/svg%3E%0A";
+
+$switch-icon: "data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg filter='url(%23filter0_dd)'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M16.1471 28.3332C23.4568 28.3332 29.3824 22.3636 29.3824 14.9998C29.3824 7.63604 23.4568 1.6665 16.1471 1.6665C8.83745 1.6665 2.9118 7.63604 2.9118 14.9998C2.9118 22.3636 8.83745 28.3332 16.1471 28.3332Z' fill='white'/%3E%3C/g%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M11.6464 10.6464C11.8417 10.4512 12.1583 10.4512 12.3536 10.6464L16 14.2929L19.6464 10.6465C19.8417 10.4512 20.1583 10.4512 20.3536 10.6465C20.5488 10.8417 20.5488 11.1583 20.3536 11.3536L16.7071 15L20.3536 18.6464C20.5488 18.8417 20.5488 19.1583 20.3536 19.3535C20.1583 19.5488 19.8417 19.5488 19.6464 19.3535L16 15.7071L12.3536 19.3536C12.1583 19.5488 11.8417 19.5488 11.6464 19.3536C11.4512 19.1583 11.4512 18.8417 11.6464 18.6464L15.2929 15L11.6464 11.3536C11.4512 11.1583 11.4512 10.8417 11.6464 10.6464Z' fill='%2391A5A7'/%3E%3Cdefs%3E%3Cfilter id='filter0_dd' x='0.911804' y='0.666504' width='30.4706' height='30.6667' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E%3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E%3CfeColorMatrix in='SourceAlpha' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0'/%3E%3CfeOffset dy='1'/%3E%3CfeGaussianBlur stdDeviation='1'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.1 0 0 0 0 0.1 0 0 0 0 0.1 0 0 0 0.16 0'/%3E%3CfeBlend mode='normal' in2='BackgroundImageFix' result='effect1_dropShadow'/%3E%3CfeColorMatrix in='SourceAlpha' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0'/%3E%3CfeOffset dy='1'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.1 0 0 0 0 0.1 0 0 0 0 0.1 0 0 0 0.16 0'/%3E%3CfeBlend mode='normal' in2='effect1_dropShadow' result='effect2_dropShadow'/%3E%3CfeBlend mode='normal' in='SourceGraphic' in2='effect2_dropShadow' result='shape'/%3E%3C/filter%3E%3C/defs%3E%3C/svg%3E%0A";
+
+$search-icon: "data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M7.19231 2C4.32468 2 2 4.32468 2 7.19231C2 10.0599 4.32468 12.3846 7.19231 12.3846C8.62506 12.3846 9.92067 11.8056 10.8612 10.8665C11.8035 9.92554 12.3846 8.62774 12.3846 7.19231C12.3846 4.32468 10.0599 2 7.19231 2ZM0 7.19231C0 3.22011 3.22011 0 7.19231 0C11.1645 0 14.3846 3.22011 14.3846 7.19231C14.3846 8.81869 13.8439 10.32 12.9338 11.5247L15.7065 14.2922C16.0973 14.6824 16.0979 15.3156 15.7078 15.7065C15.3176 16.0973 14.6844 16.0979 14.2935 15.7078L11.5189 12.9382C10.3152 13.8457 8.81606 14.3846 7.19231 14.3846C3.22011 14.3846 0 11.1645 0 7.19231Z' fill='%23244D51'/%3E%3C/svg%3E%0A";
+
+$close-icon: "data:image/svg+xml,%3Csvg width='10' height='10' viewBox='0 0 10 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0.646446 0.646447C0.841708 0.451185 1.15829 0.451184 1.35355 0.646446L5 4.29289L8.64645 0.646457C8.84171 0.451195 9.15829 0.451195 9.35355 0.646457C9.54881 0.84172 9.54881 1.1583 9.35355 1.35356L5.70711 5L9.35355 8.64644C9.54881 8.8417 9.54882 9.15828 9.35355 9.35354C9.15829 9.54881 8.84171 9.54881 8.64645 9.35354L5 5.70711L1.35355 9.35355C1.15829 9.54882 0.841708 9.54882 0.646446 9.35355C0.451184 9.15829 0.451185 8.84171 0.646447 8.64645L4.2929 5L0.646447 1.35355C0.451185 1.15829 0.451184 0.841709 0.646446 0.646447Z' fill='%23244D51'/%3E%3C/svg%3E%0A";
+
+$arrow-close-icon: "data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0.292893 0.292893C0.683417 -0.0976311 1.31658 -0.0976311 1.70711 0.292893L5 3.58579L8.29289 0.292893C8.68342 -0.0976311 9.31658 -0.0976311 9.70711 0.292893C10.0976 0.683417 10.0976 1.31658 9.70711 1.70711L5.70711 5.70711C5.31658 6.09763 4.68342 6.09763 4.29289 5.70711L0.292893 1.70711C-0.0976311 1.31658 -0.0976311 0.683417 0.292893 0.292893Z' fill='%23668386'/%3E%3C/svg%3E%0A";
+
+$arrow-open-icon: "data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0.292893 5.70711C0.683417 6.09763 1.31658 6.09763 1.70711 5.70711L5 2.41421L8.29289 5.70711C8.68342 6.09763 9.31658 6.09763 9.70711 5.70711C10.0976 5.31658 10.0976 4.68342 9.70711 4.29289L5.70711 0.292893C5.31658 -0.097631 4.68342 -0.097631 4.29289 0.292893L0.292893 4.29289C-0.0976311 4.68342 -0.0976311 5.31658 0.292893 5.70711Z' fill='white'/%3E%3C/svg%3E%0A";
+
+$cross-open-icon: "data:image/svg+xml,%3Csvg width='10' height='10' viewBox='0 0 10 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0.646446 0.646447C0.841708 0.451185 1.15829 0.451184 1.35355 0.646446L5 4.29289L8.64645 0.646457C8.84171 0.451195 9.15829 0.451195 9.35355 0.646457C9.54881 0.84172 9.54881 1.1583 9.35355 1.35356L5.70711 5L9.35355 8.64644C9.54881 8.8417 9.54882 9.15828 9.35355 9.35354C9.15829 9.54881 8.84171 9.54881 8.64645 9.35354L5 5.70711L1.35355 9.35355C1.15829 9.54882 0.841708 9.54882 0.646446 9.35355C0.451184 9.15829 0.451185 8.84171 0.646447 8.64645L4.2929 5L0.646447 1.35355C0.451185 1.15829 0.451184 0.841709 0.646446 0.646447Z' fill='%23ffffff'/%3E%3C/svg%3E%0A";
+
+$cross-close-icon: "data:image/svg+xml,%3Csvg width='10' height='10' viewBox='0 0 10 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0.646446 0.646447C0.841708 0.451185 1.15829 0.451184 1.35355 0.646446L5 4.29289L8.64645 0.646457C8.84171 0.451195 9.15829 0.451195 9.35355 0.646457C9.54881 0.84172 9.54881 1.1583 9.35355 1.35356L5.70711 5L9.35355 8.64644C9.54881 8.8417 9.54882 9.15828 9.35355 9.35354C9.15829 9.54881 8.84171 9.54881 8.64645 9.35354L5 5.70711L1.35355 9.35355C1.15829 9.54882 0.841708 9.54882 0.646446 9.35355C0.451184 9.15829 0.451185 8.84171 0.646447 8.64645L4.2929 5L0.646447 1.35355C0.451185 1.15829 0.451184 0.841709 0.646446 0.646447Z' fill='%23244D51'/%3E%3C/svg%3E%0A";
+
+/* Variables */
+$default-color: #fff;
+
+$vital-green-10: #eaeeee;
+$vital-green-20: #dbe1e2;
+$vital-green-30: #becacb;
+$vital-green-50: #91a5a7;
+$vital-green-90: #244d51;
+$vital-green-100: #1c383a;
+$hearty-Red-80: #ed6852;
+$hearty-Red-100: #bd4732;
+$accent-emerald-90: #327680;
+
+body {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+
+  color: $vital-green-90;
+}
+
+.t {
+  &-typography_bold {
+    font-weight: 600;
+  }
+
+  &-option {
+    display: block;
+    margin-bottom: 0.25em;
+  }
+
+  /* Check box */
+  // <label className="t-check t-option">
+  // <input className="t-check__input" type="checkbox" />
+  // <span className="t-check__box" />
+  // первый
+  // </label>
+  &-check {
+    $indent: 36px;
+    $padding: 3px;
+    color: $vital-green-100;
+    display: flex;
+    align-items: center;
+
+    padding: $padding;
+    padding-left: $indent;
+
+    position: relative;
+
+    &__input {
+      -webkit-appearance: none;
+      position: absolute;
+    }
+
+    &__box {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      margin-left: -$indent + $padding;
+
+      box-shadow: 0 0 0 2px $vital-green-50;
+      box-sizing: border-box;
+      border-radius: 2px;
+    }
+
+    &__input:checked + &__box {
+      background-image: url(svg-fill($tick-icon, $vital-green-90));
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    &__input:focus + &__box {
+      box-shadow: 0 0 0 2px $vital-green-50, 0 0 0 3px $vital-green-90;
+    }
+
+    &__input:disabled + &__box {
+      cursor: not-allowed;
+      background-image: url(svg-fill($tick-icon, $vital-green-50));
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+  }
+
+  /* Check box */
+  // <label className="t-radio t-option">
+  //   <input
+  //     name="dzen"
+  //     type="radio"
+  //     className="t-radio__input"
+  //     value="nedzen"
+  //   />
+  //   <span className="t-radio__box" />
+  //   Не дзен
+  // </label>
+  &-radio {
+    $indent: 36px;
+    $padding: 3px;
+
+    color: $vital-green-100;
+    display: flex;
+    align-items: center;
+
+    padding: $padding;
+    padding-left: $indent;
+
+    position: relative;
+
+    &__input {
+      -webkit-appearance: none;
+      position: absolute;
+    }
+
+    &__box {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      margin-left: -$indent + $padding;
+    }
+
+    &__input:checked + &__box {
+      background-image: url(svg-fill($tick-icon, $vital-green-90));
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    &__input:focus + &__box {
+      box-shadow: 0 0 0 1px $vital-green-90;
+    }
+
+    &__input:disabled + &__box {
+      cursor: not-allowed;
+      background-image: url(svg-fill($tick-icon, $vital-green-50));
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+  }
+
+  /* Switch */
+  // <label className="t-switch t-option">
+  // <input className="t-switch__input" type="checkbox" />
+  // <span className="t-switch__box" />
+  // первый
+  // </label>
+  &-switch {
+    $indent: 62px;
+    $padding: 3px;
+    $height: 32px;
+    $width: 54px;
+
+    height: $height;
+    padding: $padding;
+    padding-left: $indent;
+
+    &__input {
+      -webkit-appearance: none;
+      position: absolute;
+    }
+
+    &__box {
+      position: absolute;
+      height: $height;
+      width: $width;
+      margin-left: -$indent + $padding;
+
+      background: $vital-green-30;
+      border-radius: 50px;
+
+      background-image: url($switch-icon);
+      background-repeat: no-repeat;
+      background-position: left;
+      -webkit-transition: 0.6s;
+      transition: 0.6s;
+    }
+
+    &__input:checked + &__box {
+      background-position: right;
+      background-color: $vital-green-90;
+      box-shadow: 0 0 0 2px $vital-green-90;
+    }
+
+    &__input:focus + &__box {
+      box-shadow: 0 0 0 2px $vital-green-50, 0 0 0 3px $vital-green-50;
+    }
+  }
+
+  /* Button */
+
+  // <button
+  // 	type="button"
+  // 	className="t-btn t-btn_link t-btn_dangerous t-btn_underline"
+  // 	disabled
+  // >
+  // 	<span>кнопка</span>
+  // </button>
+  &-btn {
+    background-color: $default-color;
+    box-sizing: border-box;
+    border: 1px solid $vital-green-30;
+    border-radius: 4px;
+    color: $vital-green-100;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 4px 24px;
+
+    cursor: pointer;
+    user-select: none;
+
+    margin: 1px;
+
+    span {
+      display: inline-block;
+    }
+
+    &:hover,
+    &:focus {
+      border: 1px solid $vital-green-100;
+      color: $vital-green-100;
+      outline: 0;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      border: 1px solid $vital-green-30;
+      background-color: $vital-green-30;
+      color: $vital-green-50;
+    }
+
+    &_dangerous {
+      border: 1px solid $hearty-Red-80;
+      color: $hearty-Red-80;
+
+      &:hover,
+      &:focus {
+        border: 1px solid $hearty-Red-100;
+        color: $hearty-Red-100;
+      }
+
+      &:disabled {
+        cursor: not-allowed;
+        border: 1px solid $vital-green-30;
+        background-color: $vital-green-30;
+        color: $vital-green-50;
+      }
+    }
+
+    &_underline {
+      span {
+        border-bottom: 1px dashed currentColor;
+      }
+    }
+
+    &_primary {
+      border: 1px solid $accent-emerald-90;
+      background-color: $accent-emerald-90;
+      color: $default-color;
+
+      &:hover,
+      &:focus {
+        color: $default-color;
+      }
+    }
+
+    &_primary + &_dangerous {
+      border: 1px solid $hearty-Red-80;
+      background-color: $hearty-Red-80;
+
+      &:hover,
+      &:focus {
+        border: 1px solid $hearty-Red-100;
+        color: $default-color;
+      }
+    }
+
+    &_link {
+      border: 0;
+      background-color: #ffffff00;
+
+      &:hover,
+      &:focus {
+        border: 0;
+        background-color: #ffffff00;
+      }
+
+      &:disabled {
+        cursor: not-allowed;
+        border: 0;
+        background-color: #ffffff00;
+      }
+    }
+
+    &_bold {
+      font-weight: 600;
+    }
+
+    &_p0 {
+      padding: 0;
+    }
+  }
+
+  /* Input */
+  // <label className="t-input ">
+  //   второй
+  //   <div className="t-input__box">
+  //     <button className="t-input_close" />
+  //     <input type="text" placeholder="третий" />
+  //   </div>
+  // </label>
+  &-input {
+    &__box {
+      position: relative;
+
+      width: fit-content;
+
+      display: flex;
+      justify-content: flex-start;
+      box-sizing: border-box;
+      border: 0;
+
+      min-height: 48px;
+
+      font-family: Inter;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 16px;
+      line-height: 24px;
+
+      color: $vital-green-90;
+
+      .t-input_search + input,
+      .t-input_close + input,
+      .t-input_select + input {
+        padding-right: 48px;
+      }
+
+      > input {
+        font-family: Inter;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 24px;
+
+        color: $vital-green-90;
+
+        padding: 0 8px;
+        background: #ffffff00;
+        border: 0;
+
+        box-shadow: 0 0 0 1px $vital-green-30;
+        border-radius: 4px;
+
+        ::placeholder {
+          font-family: Inter;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 16px;
+          line-height: 24px;
+
+          color: $vital-green-50;
+        }
+
+        &:focus {
+          outline: 0;
+          box-shadow: 0 0 0 1px $vital-green-30, 0 0 0 2px $vital-green-90;
+        }
+
+        &:disabled {
+          background-color: $vital-green-20;
+        }
+      }
+    }
+    $size-icon: 16px;
+
+    &_search,
+    &_close {
+      cursor: pointer;
+      position: absolute;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: #ffffff00;
+      border: 0;
+      min-height: $size-icon;
+      width: $size-icon;
+      margin: -$size-icon / 2 16px 0;
+      top: 50%;
+      right: 0;
+
+      &:focus {
+        outline: 0;
+      }
+    }
+
+    &_search {
+      background-image: url($search-icon);
+    }
+
+    &_close {
+      background-image: url($close-icon);
+    }
+  }
+}

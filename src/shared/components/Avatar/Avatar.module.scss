@@ -1,0 +1,17 @@
+$img_size: 96px;
+$icon_size: 32px;
+
+.Avatar {
+  height: $img_size;
+  width: $img_size;
+  min-height: $img_size;
+  min-width: $img_size;
+  border-radius: $img_size / 2;
+}
+
+.Videovisit {
+  position: relative;
+  height: 0;
+  bottom: $icon_size;
+  left: $img_size - $icon_size;
+}

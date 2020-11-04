@@ -1,0 +1,17 @@
+@import '../../Select.module.scss';
+
+.Radio {
+  position: relative;
+
+  .Selector {
+    @extend .SelectSelector;
+
+    box-shadow: none;
+  }
+
+  .Holder {
+    @extend .SelectHolder;
+
+    min-width: 320px;
+  }
+}

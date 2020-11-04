@@ -1,0 +1,15 @@
+@import '../../Select.module.scss';
+
+.Single {
+  position: relative;
+
+  .Selector {
+    @extend .SelectSelector;
+  }
+
+  .Holder {
+    @extend .SelectHolder;
+
+    min-width: 320px;
+  }
+}

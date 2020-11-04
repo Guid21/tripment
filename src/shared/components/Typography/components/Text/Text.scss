@@ -1,0 +1,35 @@
+@import '../../../../styles/_variables';
+
+.t-text {
+  font-family: Inter;
+  font-style: normal;
+  letter-spacing: -0.3px;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  display: flex;
+  color: $primary-color;
+  display: flex;
+  align-items: center;
+
+  &_link {
+    color: $link-color;
+  }
+
+  &_secondary {
+    color: $secondary-color;
+  }
+
+  &_underline {
+    border-bottom: 1px dashed $primary-color;
+  }
+
+  &_subtitle {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 26px;
+  }
+}
+.t-text_underline.t-text_link {
+  border-bottom: 1px dashed $link-color;
+}
