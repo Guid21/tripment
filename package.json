@@ -21,9 +21,9 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"yarn front\" \"yarn mock\"",
     "mock": "json-server -w mock.json -p 3001 -d 17",
-    "server": "concurrently \"yarn start\" \"yarn mock\"",
+    "front": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
