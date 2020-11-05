@@ -105,11 +105,13 @@ export const useHooks = () => {
           value: 'Accepts new patients',
           count: acceptNewCounter,
         },
+        // TODO нет такого поля для фильтрации
         {
           id: 6,
           value: 'Schedules online',
           count: 0,
         },
+        // TODO нет такого поля для фильтрации
         {
           id: 7,
           value: 'Treats сhildren',
