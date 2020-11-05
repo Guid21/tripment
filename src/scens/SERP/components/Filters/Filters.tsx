@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, createContext } from 'react';
 import { useDispatch } from 'react-redux';
 import { useDebounce } from 'react-use';
 
@@ -8,20 +8,37 @@ import ClearFilters from './components/ClearFilters';
 import Availability from './components/Availability';
 import InsuranceFilter from './components/InsuranceFilter';
 import { getSerps } from '../../../../store/serp/serp.effects';
+import { getMetrika } from '../../../../store/metrika/metrika.effects';
 
 import styles from './Filters.module.scss';
 
 export interface IFiltersState {
-  sort: string[];
+  _sort: string;
+  _order: string;
   insurances?: string[];
   speciality?: string[];
-  _order?: string;
-  _sort?: string;
+  telehealth?: boolean;
+  acceptNew?: boolean;
+  telehealth_available_lte?: string;
+  telehealth_available_gte?: string;
+  offline_available_lte?: string;
+  offline_available_gte?: string;
 }
 
 export const initialFilters = {
-  sort: [],
+  _sort: 'telehealth_available,offline_available',
+  _order: 'desc',
 };
+
+interface IFiltersContext {
+  filters: IFiltersState;
+  setFilters: React.Dispatch<React.SetStateAction<IFiltersState>>;
+}
+
+export const FiltersContext = createContext<IFiltersContext>({
+  filters: initialFilters,
+  setFilters: () => {},
+});
 
 const Filters = () => {
   const dispatch = useDispatch();
@@ -34,13 +51,19 @@ const Filters = () => {
     dispatch,
   ]);
 
+  useEffect(() => {
+    dispatch(getMetrika());
+  }, [dispatch]);
+
   return (
     <div className={styles.Filters}>
-      <Availability />
-      <Speciality setFilters={setFilters} filters={filters} />
-      <InsuranceFilter setFilters={setFilters} filters={filters} />
-      <Sort />
-      <ClearFilters setFilters={setFilters} />
+      <FiltersContext.Provider value={{ filters, setFilters }}>
+        <Availability />
+        <Speciality />
+        <InsuranceFilter />
+        <Sort setFilters={setFilters} filters={filters} />
+        <ClearFilters setFilters={setFilters} />
+      </FiltersContext.Provider>
     </div>
   );
 };

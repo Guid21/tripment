@@ -1,4 +1,4 @@
-import React, { createContext, FC, useContext } from 'react';
+import React, { createContext, useContext } from 'react';
 import { once } from 'lodash';
 import { IItem } from './components/Item/Item';
 import Single from './components/Single';
@@ -15,6 +15,10 @@ export interface ISelect<T> {
   applyText?: string;
   header?: JSX.Element;
 }
+
+// TODO Selector надо сделать кнопкой
+// TODO Selector стрелку надо сделать не кнопкой
+// TODO State надо вынести в общий хук
 
 const createSelectContext = once(<T,>() => createContext({} as ISelect<T>));
 export const useSelectContext = <T,>() => useContext(createSelectContext<T>());

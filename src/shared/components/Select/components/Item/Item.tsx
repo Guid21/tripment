@@ -16,8 +16,9 @@ const Item: FC<IItem> = ({ value, count, checked, id, handler = () => {} }) => {
         <input
           className="t-check__input"
           type="checkbox"
+          value={id}
           checked={checked}
-          onChange={() => handler(id)}
+          onChange={(e) => handler(e.target.value)}
         />
         <span className="t-check__box" />
         <span className={styles.Value}>{value}</span>

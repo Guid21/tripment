@@ -131,7 +131,7 @@ body {
     }
   }
 
-  /* Check box */
+  /* Radio box */
   // <label className="t-radio t-option">
   //   <input
   //     name="dzen"
@@ -173,7 +173,8 @@ body {
       background-position: center;
     }
 
-    &__input:focus + &__box {
+    &__input:focus + &__box,
+    &__input:hover + &__box {
       box-shadow: 0 0 0 1px $vital-green-90;
     }
 
@@ -251,6 +252,7 @@ body {
     font-size: 16px;
     line-height: 24px;
     padding: 4px 24px;
+    display: flex;
 
     cursor: pointer;
     user-select: none;

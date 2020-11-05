@@ -26,6 +26,12 @@
 
     color: $vital-green-100;
     background: #ffffff00;
+    border: 0;
+
+    &:focus {
+      outline: 0;
+      box-shadow: 0 0 0 2px $vital-green-100;
+    }
   }
 
   .Icon {
@@ -49,6 +55,7 @@
 
     &:focus {
       outline: 0;
+      box-shadow: 0 0 0 2px $vital-green-100;
     }
   }
 
@@ -84,6 +91,12 @@
 
     .Current {
       color: $default-color;
+
+      svg {
+        path {
+          fill: $default-color;
+        }
+      }
     }
 
     .Icon {

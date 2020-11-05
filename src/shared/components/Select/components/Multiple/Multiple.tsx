@@ -53,7 +53,9 @@ const Multiple: FC<{}> = () => {
           ref={refSelector}
           onClick={handlerSelector}
         >
-          <span className={styles.Current}>{name || 'Select'}</span>
+          <button className={cn(styles.Current, 't-btn t-btn_p0')}>
+            {name || 'Select'}
+          </button>
           {!!value?.length && (
             <span className={cn(styles.Current, 't-typography_bold')}>
               • {value.length || 0}
@@ -61,7 +63,7 @@ const Multiple: FC<{}> = () => {
           )}
           <button
             className={cn(styles.Icon, { [styles.Multiple]: !!value?.length })}
-            onClick={() => onChange([])}
+            onClick={() => !!value?.length && onChange([])}
           />
         </div>
         <div className={styles.Holder} ref={refHolder}>

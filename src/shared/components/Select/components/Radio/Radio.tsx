@@ -1,6 +1,5 @@
-import React, { FC, useEffect, useMemo, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import cn from 'classnames';
-import Groups from '../Groups';
 
 import styles from './Radio.module.scss';
 import { useHooks } from '../../Hooks';
@@ -10,17 +9,12 @@ const Radio: FC<{}> = () => {
   const [option, setOption] = useState<string | number | undefined>();
   const {
     value,
-    groups,
+    options,
     name,
     applyText,
     ...ctx
   }: ISelect<string | number | undefined> = useSelectContext();
   const onChange = ctx.onChange!;
-
-  const itam = useMemo(
-    () => groups?.flat().find((item) => item?.id === value)?.value,
-    [groups, value]
-  );
 
   const {
     isActiv,
@@ -31,8 +25,10 @@ const Radio: FC<{}> = () => {
   } = useHooks();
 
   useEffect(() => {
-    setOption(value);
-  }, [isActiv, value]);
+    setOption(value || options?.[0].id);
+
+    // eslint-disable-next-line
+  }, [isActiv, value, setOption]);
 
   return (
     <div className={cn(styles.Radio, { [styles.Active]: isActiv })}>
@@ -41,7 +37,9 @@ const Radio: FC<{}> = () => {
         ref={refSelector}
         onClick={handlerSelector}
       >
-        <span className={styles.Current}>{itam || name || 'Radio Select'}</span>
+        <button className={cn(styles.Current, 't-btn t-btn_p0')}>
+          {name || 'Radio Select'}
+        </button>
         <button className={styles.Icon} />
       </div>
       <div className={styles.Holder} ref={refHolder}>
@@ -55,7 +53,20 @@ const Radio: FC<{}> = () => {
           {applyText || 'Apply'}
         </button>
         <div className={styles.Body}>
-          {groups && <Groups onChange={setOption} value={option} />}
+          {options?.map(({ value, id }) => (
+            <label className="t-radio t-option" key={id}>
+              <input
+                name="sort"
+                type="radio"
+                className="t-radio__input"
+                value={id}
+                checked={id === option}
+                onChange={() => setOption(id)}
+              />
+              <span className="t-radio__box" />
+              {value}
+            </label>
+          ))}
         </div>
       </div>
     </div>

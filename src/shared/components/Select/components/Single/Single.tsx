@@ -42,7 +42,9 @@ const Single: FC<{}> = () => {
           ref={refSelector}
           onClick={handlerSelector}
         >
-          <span className={styles.Current}>{itam || name || 'Select'}</span>
+          <button className={cn(styles.Current, 't-btn t-btn_p0')}>
+            {itam || name || 'Select'}
+          </button>
           <button className={styles.Icon} />
         </div>
         <div className={styles.Holder} ref={refHolder}>
@@ -59,7 +61,12 @@ const Single: FC<{}> = () => {
             {applyText || 'Apply'}
           </button>
           <div className={styles.Body}>
-            {groups && <Groups onChange={setOption} value={option} />}
+            {groups && (
+              <Groups
+                onChange={(v) => setOption(v === option ? undefined : v)}
+                value={option}
+              />
+            )}
           </div>
         </div>
       </div>

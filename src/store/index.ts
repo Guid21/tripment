@@ -3,23 +3,16 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 
 import serpReducer, { SerpState } from './serp/serp.reducer';
-import InsurancesReducer, {
-  InsurancesState,
-} from './insurance/insurance.reducer';
-import SpecialityReducer, {
-  SpecialityState,
-} from './speciality/speciality.reducer';
+import MetrikaReducer, { MetrikaState } from './metrika/metrika.reducer';
 
 export type Store = {
   serp: SerpState;
-  insurance: InsurancesState;
-  speciality: SpecialityState;
+  metrika: MetrikaState;
 };
 
 const reducers = combineReducers({
   serp: serpReducer,
-  insurance: InsurancesReducer,
-  speciality: SpecialityReducer,
+  metrika: MetrikaReducer,
 });
 
 export const store = createStore(

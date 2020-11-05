@@ -1,16 +1,15 @@
-import { InsurancesActions } from './insurance.actions';
+import { MetrikaActions } from './metrika.actions';
+import { Serp } from '../serp/serp.reducer';
 
-export type Insurances = string[];
-
-export type InsurancesState = {
+export type MetrikaState = {
   data: {
-    items: Insurances[];
+    items: Serp[];
   };
   isLoading: boolean;
   isError: boolean;
 };
 
-const initialState: InsurancesState = {
+const metrikalState: MetrikaState = {
   data: {
     items: [],
   },
@@ -18,28 +17,28 @@ const initialState: InsurancesState = {
   isError: false,
 };
 
-export type InsurancesAction = {
-  type: InsurancesActions;
-  payload?: { items: Insurances[] };
+export type MetrikaAction = {
+  type: MetrikaActions;
+  payload?: { items: Serp[] };
 };
 
 export default function serpReducer(
-  state = initialState,
-  { type, payload }: InsurancesAction
-): InsurancesState {
+  state = metrikalState,
+  { type, payload }: MetrikaAction
+): MetrikaState {
   switch (type) {
-    case InsurancesActions.GetInsurance:
+    case MetrikaActions.GetMetrika:
       return {
         ...state,
         isLoading: true,
       };
-    case InsurancesActions.GetInsuranceError:
+    case MetrikaActions.GetMetrikaError:
       return {
         ...state,
         isLoading: false,
         isError: true,
       };
-    case InsurancesActions.GetInsuranceSuccess:
+    case MetrikaActions.GetMetrikaSuccess:
       return {
         ...state,
         isLoading: false,
