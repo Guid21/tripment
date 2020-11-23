@@ -42,10 +42,20 @@ P. S. `@types/lodash` явно нужно убрать в devDependencies
 - За данными ходить в json файл
 - Остальное на твоё усмотрение
 
-## JSON файл с данными
+#### JSON файл с данными
 
 https://github.com/tripment/test-tasks/blob/master/tripment-frontend/mock.json
 
-## Макет в Фигме
+#### Макет в Фигме
 
 https://www.figma.com/file/1QztifdZA8sL4iiYyVM8B6/SERP-(Front-end-test-task)
+
+
+## Цель
+1. Не использовать ui библиотеки
+2. Попробовать `json-server`
+
+
+## Итог
+1. Переделывал 5 рах, получилось неуклюже
+2. `json-server` порадовал, очень удобно делать mocks таким образом
